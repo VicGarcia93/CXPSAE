@@ -1,0 +1,10 @@
+C:\Users\USUARIO1\source\repos\CXPSAE\CXPSAE\bin\Debug\CXPSAE.exe.config
+C:\Users\USUARIO1\source\repos\CXPSAE\CXPSAE\bin\Debug\CXPSAE.exe
+C:\Users\USUARIO1\source\repos\CXPSAE\CXPSAE\bin\Debug\CXPSAE.pdb
+C:\Users\USUARIO1\source\repos\CXPSAE\CXPSAE\obj\Debug\CXPSAE.csprojAssemblyReference.cache
+C:\Users\USUARIO1\source\repos\CXPSAE\CXPSAE\obj\Debug\CXPSAE.Form1.resources
+C:\Users\USUARIO1\source\repos\CXPSAE\CXPSAE\obj\Debug\CXPSAE.Properties.Resources.resources
+C:\Users\USUARIO1\source\repos\CXPSAE\CXPSAE\obj\Debug\CXPSAE.csproj.GenerateResource.cache
+C:\Users\USUARIO1\source\repos\CXPSAE\CXPSAE\obj\Debug\CXPSAE.csproj.CoreCompileInputs.cache
+C:\Users\USUARIO1\source\repos\CXPSAE\CXPSAE\obj\Debug\CXPSAE.exe
+C:\Users\USUARIO1\source\repos\CXPSAE\CXPSAE\obj\Debug\CXPSAE.pdb
