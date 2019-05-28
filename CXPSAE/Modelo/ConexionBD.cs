@@ -52,17 +52,18 @@ namespace CXPSAE.Modelo
 
         public FbConnection GetConnection(string empresa)
         {
-            
-            switch (empresa) {
-                case "Matriz":
+
+            switch (empresa)
+            {
+                case "1":
                     return connection1;
-                case "Ejidal":
+                case "2":
                     return connection2;
-                case "Poza Rica":
+                case "3":
                     return connection3;
             }
             return null;
-            
+
         }
 
     }

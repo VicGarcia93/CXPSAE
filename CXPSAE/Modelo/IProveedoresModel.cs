@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CXPSAE.Modelo
 {
-    interface IProveedoresModel
+    public interface IProveedoresModel
     {
         
-        List<Proveedor> GetProveedores(string clave,string empresa,string status);
+        DataTable GetProveedores(string clave,string empresa,string status);
+        DataTable GetProveedores();
         
 
     }

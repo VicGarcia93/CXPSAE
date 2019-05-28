@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CXPSAE.Modelo
 {
-    interface IComprasModel
+    public interface IComprasModel
     {
-        Compras GetCompraPorProveedor(String ClaveProveedor);
+        List<Compras> GetCompraPorProveedor(String ClaveProveedor,String empresa);
     }
 }

@@ -6,55 +6,66 @@ using System.Threading.Tasks;
 
 namespace CXPSAE.Modelo
 {
-    class Compras
+    public class Compras
     {
         private string factura;
+        private string concepto;
         private string documento;
         private string fechaAplicacion;
         private float monto;
         private float saldo;
-
-        public Compras(string factura, string documento,string fechaApli,float monto, float saldo)
+        private string empresa;
+        
+        
+        public Compras(string factura, string concepto ,string documento,string fechaApli,float monto, float saldo, string empresa)
         {
             this.factura = factura;
+            this.concepto = concepto;
             this.documento = documento;
             this.fechaAplicacion = fechaApli;
             this.monto = monto;
             this.saldo = saldo;
         }
 
-        public void SetFactura(string factura)
+        public string Factura
         {
-            this.factura = factura;
+            get { return factura; }
+            set { factura = value; }
         }
-        public string GetFactura()
+       public string Concepto
         {
-            return factura;
+            get { return concepto; }
+            set { concepto = value; }
         }
-        public void SetFechaAplicacion(string fecha)
+        public string Documento
         {
-            this.fechaAplicacion = fecha;
+            get { return documento; }
+            set { documento = value; }
         }
-        public string GetFechaAplicacion()
+
+        public string FechaAplicacion
         {
-            return fechaAplicacion;
+            get { return fechaAplicacion; }
+            set { fechaAplicacion = value; }
         }
-        public void SetMonto(float monto)
+
+        public float Monto
         {
-            this.monto = monto;
+            get { return monto; }
+            set { monto = value; }
         }
-        public float GetMonto()
+        public float Saldo
         {
-            return monto;
+            get { return saldo; }
+            set { saldo = value; }
         }
-        public void SetSaldo(float saldo)
+
+        public String Empresa
         {
-            this.saldo = saldo;
+            get { return empresa; }
+            set { empresa = value; }
         }
-        public float GetSaldo()
-        {
-            return saldo;
-        }
+       
     }
 
 

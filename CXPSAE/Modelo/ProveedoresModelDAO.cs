@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -9,118 +10,219 @@ using FirebirdSql.Data.FirebirdClient;
 namespace CXPSAE.Modelo
 {
     class ProveedoresModelDAO : IProveedoresModel
-    {
-        List<Proveedor> listaProveedores;
-        Proveedor proveedor;
-        ConexionBD conexion;
+    { 
+        List<Proveedor> proveedores; 
+        DataRow  dRProveedor;
         StringBuilder sqlProveedor;
         FbCommand fbCommand;
         FbDataAdapter adapter1,adapter2,adapter3;
         String sqlProveedorCompleta;
-        DataTable data1,data2,data3;
+        DataTable data1,data2,data3,dataResult;
         
-        public List<Proveedor> GetProveedores(string clave,string empresa,string status)
+        const string EMPRESA1 = "1";
+        const string EMPRESA2 = "2";
+        const string EMPRESA3 = "3";    
+        
+        public ProveedoresModelDAO()
         {
+            proveedores = new List<Proveedor>();
             sqlProveedor = new StringBuilder();
-            List<Proveedor> proveedores = new List<Proveedor>();
+            data1 = new DataTable();
+            data2 = new DataTable();
+            data3 = new DataTable();
+            InicializaDataResult();
 
+        }
+
+        private void InicializaDataResult()
+        {
+            dataResult = new DataTable("proveedores");
+            dataResult.Columns.Add("Nombre");
+            dataResult.Columns.Add("Estatus");
+            dataResult.Columns.Add("Saldo");
+            dataResult.Columns.Add("Empresa");
+
+            data1.Clear();
+            data2.Clear();
+            data3.Clear();
+        }
+
+        //Obtener los proveedores filtrado por clave, empresa o estatus
+        public DataTable GetProveedores(string clave,string empresa,string status)
+        {
+            InicializaDataResult();
+           
             switch (empresa)
             {
-                case "Matriz":
-                    sqlProveedorCompleta = "SELECT pro.nombre, pro.saldo FROM prov03";
+                case EMPRESA1:
+                    sqlProveedorCompleta = "SELECT pro.nombre, pro.status, pro.saldo FROM prov03";
                     adapter1 = new FbDataAdapter(GetCommand(clave, empresa, status, sqlProveedorCompleta));
                     adapter1.Fill(data1);
+                    Console.WriteLine("Tamaño de data1: " + data1.Rows.Count);
                     for (int i = 0; i < data1.Rows.Count; i++)
                     {
-                        proveedor = new Proveedor(data1.Rows[i][0].ToString(), status, float.Parse(data1.Rows[i][1].ToString()), "Matriz");
-                        proveedores.Add(proveedor);
+                        //proveedor = new Proveedor(data1.Rows[i][0].ToString(), status, float.Parse(data1.Rows[i][1].ToString()), "Matriz");
+                        // proveedores.Add(proveedor);
+                        dataResult.Rows.Add(new Object[] { data1.Rows[i][0].ToString(), data1.Rows[i][1].ToString(), float.Parse(data1.Rows[i][2].ToString()), "Matriz" });
                     }
                     
                     break;
-                case "Ejidal":
-                    sqlProveedorCompleta = "SELECT pro.nombre, pro.saldo FROM prov04";
+                case EMPRESA2:
+                    sqlProveedorCompleta = "SELECT pro.nombre, pro.status, pro.saldo FROM prov04";
                     adapter2 = new FbDataAdapter(GetCommand(clave, empresa, status, sqlProveedorCompleta));
                     adapter2.Fill(data2);
                     for (int i = 0; i < data2.Rows.Count; i++)
                     {
-                        proveedor = new Proveedor(data2.Rows[i][0].ToString(), status, float.Parse(data2.Rows[i][1].ToString()), "Ejidal");
-                        proveedores.Add(proveedor);
+                        //proveedor = new Proveedor(data2.Rows[i][0].ToString(), status, float.Parse(data2.Rows[i][1].ToString()), "Ejidal");
+                        //proveedores.Add(proveedor);
+                        dataResult.Rows.Add(new Object[] { data2.Rows[i][0].ToString(), data2.Rows[i][1].ToString(),float.Parse(data2.Rows[i][2].ToString()), "Ejidal" });
                     }
 
                     break;
-                case "Poza Rica":
-                    sqlProveedorCompleta = "SELECT pro.nombre, pro.saldo FROM prov05";
+                case EMPRESA3:
+                    sqlProveedorCompleta = "SELECT pro.nombre, pro.status, pro.saldo FROM prov05";
                     adapter3 = new FbDataAdapter(GetCommand(clave, empresa, status, sqlProveedorCompleta));
                     adapter3.Fill(data3);
                     for (int i = 0; i < data3.Rows.Count; i++)
                     {
-                        proveedor = new Proveedor(data3.Rows[i][0].ToString(), status, float.Parse(data3.Rows[i][1].ToString()), "Poza Rica");
-                        proveedores.Add(proveedor);
+                        // proveedor = new Proveedor(data3.Rows[i][0].ToString(), status, float.Parse(data3.Rows[i][1].ToString()), "Poza Rica");
+                        // proveedores.Add(proveedor);
+                        dataResult.Rows.Add(new Object[] { data3.Rows[i][0].ToString(), data3.Rows[i][1].ToString(), float.Parse(data3.Rows[i][2].ToString()), "Poza Rica" });
+
                     }
                     break;
-                case "Todas":
-                    sqlProveedorCompleta = "SELECT pro.nombre, pro.saldo FROM prov0";
-                    adapter1 = new FbDataAdapter(GetCommand(clave, empresa, status, sqlProveedorCompleta + 1));
-                    adapter2 = new FbDataAdapter(GetCommand(clave, empresa, status, sqlProveedorCompleta + 2));
-                    adapter3 = new FbDataAdapter(GetCommand(clave, empresa, status, sqlProveedorCompleta + 3));
+               default:
+                    sqlProveedorCompleta = "SELECT pro.nombre, pro.status, pro.saldo FROM prov0";
+                    adapter1 = new FbDataAdapter(GetCommand(clave, "1", status, sqlProveedorCompleta + 3));
+                    adapter2 = new FbDataAdapter(GetCommand(clave, "2", status, sqlProveedorCompleta + 4));
+                    adapter3 = new FbDataAdapter(GetCommand(clave, "3", status, sqlProveedorCompleta + 5));
 
                     adapter1.Fill(data1);
                     adapter2.Fill(data2);
                     adapter3.Fill(data3);
 
+                    return GetData();
+                    
 
-                    for (int i = 0; i < data1.Rows.Count; i++)
-                    {
-                        proveedor = new Proveedor(data1.Rows[i][0].ToString(), status, float.Parse(data1.Rows[i][1].ToString()), "M");
-                        proveedores.Add(proveedor);
-                    }
-                    for (int i = 0; i < data2.Rows.Count; i++)
-                    {
-                        if ((proveedor = proveedores.Find(x => x.GetNombre().Equals(data2.Rows[i][0].ToString()))) != null)
-                        {
-                            proveedor.SetSaldo(proveedor.GetSaldo() + float.Parse(data2.Rows[0][1].ToString()));
-                            proveedor.SetEmpresa("M / E");
-                        }
-                        else
-                        {
-                            proveedor = new Proveedor(data2.Rows[i][0].ToString(), status, float.Parse(data2.Rows[i][1].ToString()), "E");
-                            proveedores.Add(proveedor);
-                        }
-                        
-                    }
-                    for (int i = 0; i < data3.Rows.Count; i++)
-                    {
-                        if ((proveedor = proveedores.Find(x => x.GetNombre().Equals(data3.Rows[i][0].ToString()))) != null)
-                        {
-                            proveedor.SetSaldo(proveedor.GetSaldo() + float.Parse(data3.Rows[0][1].ToString()));
-                            proveedor.SetEmpresa(proveedor.GetEmpresa() + " / PR");
-                        }
-                        else
-                        {
-                            proveedor = new Proveedor(data3.Rows[i][0].ToString(), status, float.Parse(data3.Rows[i][1].ToString()), "PR");
-                            proveedores.Add(proveedor);
-                        }
-
-                    }
-
-                    break;
+                    
             }
-            return proveedores;
+            return dataResult;
 
         }
+        //Obtener todos los proveedores
+        public DataTable GetProveedores()
+        {
+            dataResult.Clear();
+            sqlProveedorCompleta = "SELECT pro.nombre, pro.status, pro.saldo FROM prov0";
+            adapter1 = new FbDataAdapter(GetCommand(EMPRESA1, sqlProveedorCompleta + 3));
+            adapter2 = new FbDataAdapter(GetCommand(EMPRESA2, sqlProveedorCompleta + 4));
+            adapter3 = new FbDataAdapter(GetCommand(EMPRESA3, sqlProveedorCompleta + 5));
+
+            adapter1.Fill(data1);
+            adapter2.Fill(data2);
+            adapter3.Fill(data3);
+            
+            return GetData();
+        }
+        //Obtener la conexión filtrado por clave, empresa y status
         private FbCommand GetCommand(string clave,string empresa,string status,string sql)
         {
-            sqlProveedor.Append(empresa);
-            sqlProveedor.Append(" WHERE pro.clave like %");
-            sqlProveedor.Append(clave + "%");
-            sqlProveedor.Append(" OR pro.nombre like %");
-            sqlProveedor.Append(clave + "%");
-            sqlProveedor.Append(" AND status = ");
-            sqlProveedor.Append(status);
+            sqlProveedor.Clear();
+            sqlProveedor.Append(sql);
+            sqlProveedor.Append(" pro WHERE (pro.clave like '%");
+            sqlProveedor.Append(clave + "%'");
+            sqlProveedor.Append(" OR pro.nombre like '%");
+            sqlProveedor.Append(clave + "%')");
+            if (!status.Equals("T"))
+            {
+                sqlProveedor.Append(" AND status = '");
+                sqlProveedor.Append(status);
+                sqlProveedor.Append("'");
+            }
+           
+
+            Console.WriteLine(sqlProveedor.ToString());
 
             fbCommand = new FbCommand(sqlProveedor.ToString(), ConexionBD.GetInstance().GetConnection(empresa));
 
             return fbCommand;
+        }
+        //Obtener la conexión
+        private FbCommand GetCommand(string empresa, string sql)
+        {
+            Console.WriteLine("Empresa: " + empresa);
+            sqlProveedor.Clear();
+            sqlProveedor.Append(sql);
+            sqlProveedor.Append(" pro WHERE pro.status = 'A'");
+            fbCommand = new FbCommand(sqlProveedor.ToString(), ConexionBD.GetInstance().GetConnection(empresa));
+            
+            return fbCommand;
+        }
+
+        private DataTable GetData()
+        {
+            for (int i = 0; i < data1.Rows.Count; i++)
+            {
+
+                dataResult.Rows.Add(new Object[] { data1.Rows[i][0].ToString(), data1.Rows[i][1].ToString(), float.Parse(data1.Rows[i][2].ToString()), "M" });
+                // proveedor = new Proveedor(data1.Rows[i][0].ToString(), status, float.Parse(data1.Rows[i][1].ToString()), "M");
+                // proveedores.Add(proveedor);
+            }
+            for (int i = 0; i < data2.Rows.Count; i++)
+            {
+                //if ((proveedor = proveedores.Find(x => x.GetNombre().Equals(data2.Rows[i][0].ToString()))) != null)
+                try
+                {
+                    if ((dRProveedor = (dataResult.Select("Nombre = '" + data2.Rows[i][0].ToString() + "'"))[0]) != null)
+                    {
+                        //Actualiza el saldo
+                        dRProveedor[2] = float.Parse(dRProveedor[2].ToString()) + float.Parse(data2.Rows[0][2].ToString());
+                        //proveedor.SetSaldo(proveedor.GetSaldo() + float.Parse(data2.Rows[0][1].ToString()));
+                        dRProveedor[3] = "M / E";
+                        //proveedor.SetEmpresa("M / E");
+                    }
+                    else
+                    {
+
+                        // proveedor = new Proveedor(data2.Rows[i][0].ToString(), status, float.Parse(data2.Rows[i][1].ToString()), "E");
+                        // proveedores.Add(proveedor);
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    dataResult.Rows.Add(new Object[] { data2.Rows[i][0].ToString(), data2.Rows[i][1].ToString(), float.Parse(data2.Rows[i][2].ToString()), "E" });
+                }
+
+
+            }
+            for (int i = 0; i < data3.Rows.Count; i++)
+            {
+                try
+                {
+                    if ((dRProveedor = dataResult.Select("Nombre ='" + data3.Rows[i][0].ToString() + "'")[0]) != null)
+                    {
+                        //proveedor.SetSaldo(proveedor.GetSaldo() + float.Parse(data3.Rows[0][1].ToString()));
+                        dRProveedor[2] = float.Parse(dRProveedor[2].ToString()) + float.Parse(data3.Rows[0][1].ToString());
+                        //proveedor.SetEmpresa(proveedor.GetEmpresa() + " / PR");
+                        dRProveedor[3] = dRProveedor[3] + " / PR";
+                    }
+                    else
+                    {
+                        // proveedor = new Proveedor(data3.Rows[i][0].ToString(), status, float.Parse(data3.Rows[i][1].ToString()), "PR");
+                        // proveedores.Add(proveedor);
+                    }
+                }
+                catch (Exception e)
+                {
+                    dataResult.Rows.Add(new Object[] { data3.Rows[i][0].ToString(), data3.Rows[i][1], float.Parse(data3.Rows[i][2].ToString()), "PR" });
+
+                }
+                //if ((proveedor = proveedores.Find(x => x.GetNombre().Equals(data3.Rows[i][0].ToString()))) != null)
+
+
+            }
+            return dataResult;
         }
     }
 }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CXPSAE.Modelo
 {
-    class Proveedor
+    public class Proveedor
     {
-        private string clave;
+       // private string clave;
         private string estatus;
         private string nombre;
         private float saldo;
