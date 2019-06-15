@@ -37,6 +37,9 @@ namespace CXPSAE.Modelo
         private void InicializaDataResult()
         {
             dataResult = new DataTable("proveedores");
+            dataResult.Columns.Add("cve_1");
+            dataResult.Columns.Add("cve_2");
+            dataResult.Columns.Add("cve_3");
             dataResult.Columns.Add("Nombre");
             dataResult.Columns.Add("Estatus");
             dataResult.Columns.Add("Saldo");
@@ -55,7 +58,7 @@ namespace CXPSAE.Modelo
             switch (empresa)
             {
                 case EMPRESA1:
-                    sqlProveedorCompleta = "SELECT pro.nombre, pro.status, pro.saldo FROM prov03";
+                    sqlProveedorCompleta = "SELECT pro.clave, pro.nombre, pro.status, pro.saldo FROM prov03";
                     adapter1 = new FbDataAdapter(GetCommand(clave, empresa, status, sqlProveedorCompleta));
                     adapter1.Fill(data1);
                     Console.WriteLine("Tamaño de data1: " + data1.Rows.Count);
@@ -63,36 +66,36 @@ namespace CXPSAE.Modelo
                     {
                         //proveedor = new Proveedor(data1.Rows[i][0].ToString(), status, float.Parse(data1.Rows[i][1].ToString()), "Matriz");
                         // proveedores.Add(proveedor);
-                        dataResult.Rows.Add(new Object[] { data1.Rows[i][0].ToString(), data1.Rows[i][1].ToString(), float.Parse(data1.Rows[i][2].ToString()), "Matriz" });
+                        dataResult.Rows.Add(new Object[] { data1.Rows[i][0].ToString(),"","" , data1.Rows[i][1].ToString(), data1.Rows[i][2] ,float.Parse(data1.Rows[i][3].ToString()), "Matriz" });
                     }
                     
                     break;
                 case EMPRESA2:
-                    sqlProveedorCompleta = "SELECT pro.nombre, pro.status, pro.saldo FROM prov04";
+                    sqlProveedorCompleta = "SELECT pro.clave ,pro.nombre, pro.status, pro.saldo FROM prov04";
                     adapter2 = new FbDataAdapter(GetCommand(clave, empresa, status, sqlProveedorCompleta));
                     adapter2.Fill(data2);
                     for (int i = 0; i < data2.Rows.Count; i++)
                     {
                         //proveedor = new Proveedor(data2.Rows[i][0].ToString(), status, float.Parse(data2.Rows[i][1].ToString()), "Ejidal");
                         //proveedores.Add(proveedor);
-                        dataResult.Rows.Add(new Object[] { data2.Rows[i][0].ToString(), data2.Rows[i][1].ToString(),float.Parse(data2.Rows[i][2].ToString()), "Ejidal" });
+                        dataResult.Rows.Add(new Object[] { "" ,data2.Rows[i][0].ToString(), "" , data2.Rows[i][1].ToString() ,data2.Rows[i][2].ToString(),float.Parse(data2.Rows[i][3].ToString()), "Ejidal" });
                     }
 
                     break;
                 case EMPRESA3:
-                    sqlProveedorCompleta = "SELECT pro.nombre, pro.status, pro.saldo FROM prov05";
+                    sqlProveedorCompleta = "SELECT pro.clave, pro.nombre, pro.status, pro.saldo FROM prov05";
                     adapter3 = new FbDataAdapter(GetCommand(clave, empresa, status, sqlProveedorCompleta));
                     adapter3.Fill(data3);
                     for (int i = 0; i < data3.Rows.Count; i++)
                     {
                         // proveedor = new Proveedor(data3.Rows[i][0].ToString(), status, float.Parse(data3.Rows[i][1].ToString()), "Poza Rica");
                         // proveedores.Add(proveedor);
-                        dataResult.Rows.Add(new Object[] { data3.Rows[i][0].ToString(), data3.Rows[i][1].ToString(), float.Parse(data3.Rows[i][2].ToString()), "Poza Rica" });
+                        dataResult.Rows.Add(new Object[] { "" , "" , data3.Rows[i][0].ToString(), data3.Rows[i][1].ToString(), data3.Rows[i][2].ToString() ,float.Parse(data3.Rows[i][3].ToString()), "Poza Rica" });
 
                     }
                     break;
                default:
-                    sqlProveedorCompleta = "SELECT pro.nombre, pro.status, pro.saldo FROM prov0";
+                    sqlProveedorCompleta = "SELECT pro.clave ,pro.nombre, pro.status, pro.saldo FROM prov0";
                     adapter1 = new FbDataAdapter(GetCommand(clave, "1", status, sqlProveedorCompleta + 3));
                     adapter2 = new FbDataAdapter(GetCommand(clave, "2", status, sqlProveedorCompleta + 4));
                     adapter3 = new FbDataAdapter(GetCommand(clave, "3", status, sqlProveedorCompleta + 5));
@@ -113,7 +116,7 @@ namespace CXPSAE.Modelo
         public DataTable GetProveedores()
         {
             dataResult.Clear();
-            sqlProveedorCompleta = "SELECT pro.nombre, pro.status, pro.saldo FROM prov0";
+            sqlProveedorCompleta = "SELECT pro.clave ,pro.nombre, pro.status, pro.saldo FROM prov0";
             adapter1 = new FbDataAdapter(GetCommand(EMPRESA1, sqlProveedorCompleta + 3));
             adapter2 = new FbDataAdapter(GetCommand(EMPRESA2, sqlProveedorCompleta + 4));
             adapter3 = new FbDataAdapter(GetCommand(EMPRESA3, sqlProveedorCompleta + 5));
@@ -164,7 +167,7 @@ namespace CXPSAE.Modelo
             for (int i = 0; i < data1.Rows.Count; i++)
             {
 
-                dataResult.Rows.Add(new Object[] { data1.Rows[i][0].ToString(), data1.Rows[i][1].ToString(), float.Parse(data1.Rows[i][2].ToString()), "M" });
+                dataResult.Rows.Add(new Object[] { data1.Rows[i][0].ToString(),"","", data1.Rows[i][1].ToString(), data1.Rows[i][2].ToString(), float.Parse(data1.Rows[i][3].ToString()), "M" });
                 // proveedor = new Proveedor(data1.Rows[i][0].ToString(), status, float.Parse(data1.Rows[i][1].ToString()), "M");
                 // proveedores.Add(proveedor);
             }
@@ -173,12 +176,12 @@ namespace CXPSAE.Modelo
                 //if ((proveedor = proveedores.Find(x => x.GetNombre().Equals(data2.Rows[i][0].ToString()))) != null)
                 try
                 {
-                    if ((dRProveedor = (dataResult.Select("Nombre = '" + data2.Rows[i][0].ToString() + "'"))[0]) != null)
+                    if ((dRProveedor = (dataResult.Select("Nombre = '" + data2.Rows[i][1].ToString() + "'"))[0]) != null)
                     {
                         //Actualiza el saldo
-                        dRProveedor[2] = float.Parse(dRProveedor[2].ToString()) + float.Parse(data2.Rows[0][2].ToString());
+                        dRProveedor[5] = float.Parse(dRProveedor[5].ToString()) + float.Parse(data2.Rows[0][3].ToString());
                         //proveedor.SetSaldo(proveedor.GetSaldo() + float.Parse(data2.Rows[0][1].ToString()));
-                        dRProveedor[3] = "M / E";
+                        dRProveedor[6] = "M / E";
                         //proveedor.SetEmpresa("M / E");
                     }
                     else
@@ -191,7 +194,7 @@ namespace CXPSAE.Modelo
                 }
                 catch (Exception e)
                 {
-                    dataResult.Rows.Add(new Object[] { data2.Rows[i][0].ToString(), data2.Rows[i][1].ToString(), float.Parse(data2.Rows[i][2].ToString()), "E" });
+                    dataResult.Rows.Add(new Object[] { "",data2.Rows[i][0].ToString(), "" , data2.Rows[i][1].ToString(), data2.Rows[i][2].ToString() ,float.Parse(data2.Rows[i][3].ToString()), "E" });
                 }
 
 
@@ -200,12 +203,12 @@ namespace CXPSAE.Modelo
             {
                 try
                 {
-                    if ((dRProveedor = dataResult.Select("Nombre ='" + data3.Rows[i][0].ToString() + "'")[0]) != null)
+                    if ((dRProveedor = dataResult.Select("Nombre ='" + data3.Rows[i][1].ToString() + "'")[0]) != null)
                     {
                         //proveedor.SetSaldo(proveedor.GetSaldo() + float.Parse(data3.Rows[0][1].ToString()));
-                        dRProveedor[2] = float.Parse(dRProveedor[2].ToString()) + float.Parse(data3.Rows[0][1].ToString());
+                        dRProveedor[5] = float.Parse(dRProveedor[5].ToString()) + float.Parse(data3.Rows[0][3].ToString());
                         //proveedor.SetEmpresa(proveedor.GetEmpresa() + " / PR");
-                        dRProveedor[3] = dRProveedor[3] + " / PR";
+                        dRProveedor[6] = dRProveedor[6] + " / PR";
                     }
                     else
                     {
@@ -215,7 +218,7 @@ namespace CXPSAE.Modelo
                 }
                 catch (Exception e)
                 {
-                    dataResult.Rows.Add(new Object[] { data3.Rows[i][0].ToString(), data3.Rows[i][1], float.Parse(data3.Rows[i][2].ToString()), "PR" });
+                    dataResult.Rows.Add(new Object[] { "", "" ,data3.Rows[i][0].ToString(), data3.Rows[i][1], data3.Rows[i][2].ToString(), float.Parse(data3.Rows[i][3].ToString()), "PR" });
 
                 }
                 //if ((proveedor = proveedores.Find(x => x.GetNombre().Equals(data3.Rows[i][0].ToString()))) != null)

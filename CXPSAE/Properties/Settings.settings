@@ -3,13 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="Llantas1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\\Users\\USUARIO1\\Documents\\BD\\SAE70EMPRE03.FDB</Value>
+      <Value Profile="(Default)">WIN-JFGD5UCXM4B:C://PROGRAM FILES//COMMON FILES//ASPEL//Sistemas aspel//SAE7.00//BD//SAE70EMPRE03.FDB
+</Value>
     </Setting>
     <Setting Name="Llantas2" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\\Users\\USUARIO1\\Documents\\BD\\SAE70EMPRE04.FDB</Value>
+      <Value Profile="(Default)">WIN-JFGD5UCXM4B:C://PROGRAM FILES//COMMON FILES//ASPEL//Sistemas aspel//SAE7.00//BD//SAE70EMPRE04.FDB
+</Value>
     </Setting>
     <Setting Name="Llantas3" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\\Users\\USUARIO1\\Documents\\BD\\SAE70EMPRE05.FDB</Value>
+      <Value Profile="(Default)">WIN-JFGD5UCXM4B:C://PROGRAM FILES//COMMON FILES//ASPEL//Sistemas aspel//SAE7.00//BD//SAE70EMPRE05.FDB
+</Value>
     </Setting>
   </Settings>
 </SettingsFile>

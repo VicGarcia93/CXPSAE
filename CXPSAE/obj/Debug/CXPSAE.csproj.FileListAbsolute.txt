@@ -12,3 +12,17 @@ C:\Users\USUARIO1\source\repos\CXPSAE\CXPSAE\obj\Debug\CXPSAE.exe
 C:\Users\USUARIO1\source\repos\CXPSAE\CXPSAE\obj\Debug\CXPSAE.pdb
 C:\Users\USUARIO1\source\repos\CXPSAE\CXPSAE\obj\Debug\CXPSAE.csprojAssemblyReference.cache
 C:\Users\USUARIO1\source\repos\CXPSAE\CXPSAE\obj\Debug\CXPSAE.Vista.ControlHelper.resources
+C:\Users\Usuario 232\Documents\Visual Studio 2013\Projects\CXPSAE\CXPSAE\bin\Debug\CXPSAE.exe.config
+C:\Users\Usuario 232\Documents\Visual Studio 2013\Projects\CXPSAE\CXPSAE\bin\Debug\CXPSAE.exe
+C:\Users\Usuario 232\Documents\Visual Studio 2013\Projects\CXPSAE\CXPSAE\bin\Debug\CXPSAE.pdb
+C:\Users\Usuario 232\Documents\Visual Studio 2013\Projects\CXPSAE\CXPSAE\bin\Debug\FirebirdSql.Data.FirebirdClient.dll
+C:\Users\Usuario 232\Documents\Visual Studio 2013\Projects\CXPSAE\CXPSAE\bin\Debug\FirebirdSql.Data.FirebirdClient.pdb
+C:\Users\Usuario 232\Documents\Visual Studio 2013\Projects\CXPSAE\CXPSAE\obj\Debug\CXPSAE.csprojAssemblyReference.cache
+C:\Users\Usuario 232\Documents\Visual Studio 2013\Projects\CXPSAE\CXPSAE\obj\Debug\CXPSAE.Vista.ControlHelper.resources
+C:\Users\Usuario 232\Documents\Visual Studio 2013\Projects\CXPSAE\CXPSAE\obj\Debug\CXPSAE.Form1.resources
+C:\Users\Usuario 232\Documents\Visual Studio 2013\Projects\CXPSAE\CXPSAE\obj\Debug\CXPSAE.Properties.Resources.resources
+C:\Users\Usuario 232\Documents\Visual Studio 2013\Projects\CXPSAE\CXPSAE\obj\Debug\CXPSAE.csproj.GenerateResource.cache
+C:\Users\Usuario 232\Documents\Visual Studio 2013\Projects\CXPSAE\CXPSAE\obj\Debug\CXPSAE.csproj.CoreCompileInputs.cache
+C:\Users\Usuario 232\Documents\Visual Studio 2013\Projects\CXPSAE\CXPSAE\obj\Debug\CXPSAE.csproj.CopyComplete
+C:\Users\Usuario 232\Documents\Visual Studio 2013\Projects\CXPSAE\CXPSAE\obj\Debug\CXPSAE.exe
+C:\Users\Usuario 232\Documents\Visual Studio 2013\Projects\CXPSAE\CXPSAE\obj\Debug\CXPSAE.pdb

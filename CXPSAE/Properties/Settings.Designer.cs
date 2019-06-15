@@ -25,7 +25,8 @@ namespace CXPSAE.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\\\Users\\\\USUARIO1\\\\Documents\\\\BD\\\\SAE70EMPRE03.FDB")]
+        [global::System.Configuration.DefaultSettingValueAttribute("WIN-JFGD5UCXM4B:C://PROGRAM FILES//COMMON FILES//ASPEL//Sistemas aspel//SAE7.00//" +
+            "BD//SAE70EMPRE03.FDB\r\n")]
         public string Llantas1 {
             get {
                 return ((string)(this["Llantas1"]));
@@ -37,7 +38,8 @@ namespace CXPSAE.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\\\Users\\\\USUARIO1\\\\Documents\\\\BD\\\\SAE70EMPRE04.FDB")]
+        [global::System.Configuration.DefaultSettingValueAttribute("WIN-JFGD5UCXM4B:C://PROGRAM FILES//COMMON FILES//ASPEL//Sistemas aspel//SAE7.00//" +
+            "BD//SAE70EMPRE04.FDB\r\n")]
         public string Llantas2 {
             get {
                 return ((string)(this["Llantas2"]));
@@ -49,7 +51,8 @@ namespace CXPSAE.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\\\Users\\\\USUARIO1\\\\Documents\\\\BD\\\\SAE70EMPRE05.FDB")]
+        [global::System.Configuration.DefaultSettingValueAttribute("WIN-JFGD5UCXM4B:C://PROGRAM FILES//COMMON FILES//ASPEL//Sistemas aspel//SAE7.00//" +
+            "BD//SAE70EMPRE05.FDB\r\n")]
         public string Llantas3 {
             get {
                 return ((string)(this["Llantas3"]));
