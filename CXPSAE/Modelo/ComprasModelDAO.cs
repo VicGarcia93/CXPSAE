@@ -25,6 +25,13 @@ namespace CXPSAE.Modelo
         FbDataAdapter comprasAdapter1;
         FbDataAdapter comprasAdapter2;
         FbDataAdapter comprasAdapter3;
+
+        const string EMPRESA1 = "1";
+        const string EMPRESA2 = "2";
+        const string EMPRESA3 = "3";
+
+        String sqlComprasAux;
+
         public ComprasModelDAO()
         {
             data1 = new DataTable();
@@ -33,7 +40,8 @@ namespace CXPSAE.Modelo
             
 
             sqlCompras = new StringBuilder();
-            sqlCompras.Append("select pag.no_factura,pag.num_cpto,pag.docto,pag.fecha_apli, pag.importe, from paga_m0  ");
+            sqlComprasAux = "select pag.no_factura,pag.num_cpto,pag.docto,pag.fecha_apli, pag.importe from paga_m0";
+            
         }
 
         private void ReiniciaValores()
@@ -41,16 +49,26 @@ namespace CXPSAE.Modelo
             data1.Clear();
             data2.Clear();
             data2.Clear();
+
+            sqlCompras.Clear();
+            sqlCompras.Append(sqlComprasAux);
         }
 
-        public List<Compras> GetCompraPorProveedor(string ClaveProveedor,string empresa)
+        public List<Compras> GetCompraPorProveedor(String cve_1, String cve_2, String cve_3)
         {
             listaCompras = new List<Compras>();
             
-            comprasAdapter1 = new FbDataAdapter(GetCommand(empresa, ClaveProveedor, sqlCompras.ToString()+3));
-            comprasAdapter2 = new FbDataAdapter(GetCommand(empresa, ClaveProveedor, sqlCompras.ToString() + 4));
-            comprasAdapter3 = new FbDataAdapter(GetCommand(empresa, ClaveProveedor, sqlCompras.ToString() + 5));
+            
+            comprasAdapter1 = new FbDataAdapter(GetCommand(EMPRESA1, cve_1, sqlComprasAux + "3"));
+           
+            
+            comprasAdapter2 = new FbDataAdapter(GetCommand(EMPRESA2, cve_2, sqlComprasAux + "4"));
+           
+            
+            Console.WriteLine("Cve_1: {0}, Cve_2: {1}, Cve_3: {2}", cve_1,cve_2,cve_3);
+            comprasAdapter3 = new FbDataAdapter(GetCommand(EMPRESA3, cve_3, sqlComprasAux + "5"));
             //Factura(0),num_concepto(1),documento(2),fecha_apli(3),importe(4)
+            Console.WriteLine("XXXXXX: {0}", sqlCompras.ToString());
             comprasAdapter1.Fill(data1);
             comprasAdapter2.Fill(data2);
             comprasAdapter3.Fill(data3);
@@ -59,8 +77,8 @@ namespace CXPSAE.Modelo
             GetComprasMovimientos(data2, "Ejidal");
             GetComprasMovimientos(data3, "Poza Rica");
             //movimiento = new Compras("factura","concepto","documento","fechaApli",500,500,"empresa");
-
-           return listaCompras;
+            Console.WriteLine("Número de compras: {0}", listaCompras.Count);
+            return listaCompras;
             
         }
 
@@ -89,34 +107,38 @@ namespace CXPSAE.Modelo
                 movAux = datos.Rows[i];
                 sqlComprasDetalle = "SELECT SUM(DET.IMPORTE) FROM " + tablaBD + " DET WHERE DET.refer = '" + movAux[2] +
                     "'";
+                Console.WriteLine(sqlComprasDetalle);
                 fbCommandAux = new FbCommand(sqlComprasDetalle, ConexionBD.GetInstance().GetConnection(dataBase));
-                fbDataAdapterAux = new FbDataAdapter(fbCommand);
+                fbDataAdapterAux = new FbDataAdapter(fbCommandAux);
                 dataAux = new DataTable();
                 fbDataAdapterAux.Fill(dataAux);
-                saldoCompra = dataAux.Rows[0][0].ToString() ?? "";
-
-                if (!saldoCompra.Equals("0"))
-                {
-                    movimiento = new Compras(movAux[0].ToString(), movAux[1].ToString(), movAux[2].ToString(),
-                            movAux[3].ToString(), float.Parse(movAux[4].ToString()), float.Parse(saldoCompra), empresa);
-
-                    listaCompras.Add(movimiento);
-                }
                 
+                    saldoCompra = dataAux.Rows[0][0].ToString() ?? "";
+
+                    if (!saldoCompra.Equals("0") && !saldoCompra.Equals(""))
+                    {
+                        movimiento = new Compras(movAux[0].ToString(), movAux[1].ToString(), movAux[2].ToString(),
+                                movAux[3].ToString(), float.Parse(movAux[4].ToString()), float.Parse(saldoCompra), empresa);
+
+                        listaCompras.Add(movimiento);
+                    }
+                               
             }
            
         }
 
         private FbCommand GetCommand(string empresa, string claveProveedor, string sql)
         {
+            
             //Obtener la conexión
             Console.WriteLine("Empresa: " + empresa);
+            sqlCompras.Clear();
             sqlCompras.Append(sql);
             sqlCompras.Append(" pag where pag.cve_prov = '");
             sqlCompras.Append(claveProveedor);
             sqlCompras.Append("'");
             fbCommand = new FbCommand(sqlCompras.ToString(), ConexionBD.GetInstance().GetConnection(empresa));
-
+            
             return fbCommand;
             
         }

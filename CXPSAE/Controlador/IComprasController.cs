@@ -10,7 +10,7 @@ namespace CXPSAE.Controlador
 {
     public interface IComprasController
     {
-        void GetCompras(IProveedoresView view);
+        void GetCompras(IProveedoresView view, string cve_1, string cve_2, string cve_3);
         void SetComprasModel(IComprasModel model);
     }
 }

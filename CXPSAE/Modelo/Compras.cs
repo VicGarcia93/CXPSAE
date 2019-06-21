@@ -25,6 +25,7 @@ namespace CXPSAE.Modelo
             this.fechaAplicacion = fechaApli;
             this.monto = monto;
             this.saldo = saldo;
+            this.empresa = empresa;
         }
 
         public string Factura

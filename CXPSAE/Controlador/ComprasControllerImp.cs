@@ -16,9 +16,10 @@ namespace CXPSAE.Controlador
         {
             this.modelCompras = model;
         }
-        public void GetCompras(IProveedoresView view)
+        public void GetCompras(IProveedoresView view, string cve_1, string cve_2, string cve_3)
         {
-            
+
+            view.SetListaCompras(modelCompras.GetCompraPorProveedor(cve_1, cve_2, cve_3));
         }
 
         public void SetComprasModel(IComprasModel model)

@@ -9,6 +9,6 @@ namespace CXPSAE.Modelo
 {
     public interface IComprasModel
     {
-        List<Compras> GetCompraPorProveedor(String ClaveProveedor,String empresa);
+        List<Compras> GetCompraPorProveedor(String cve_1, String cve_2, String cve_3);
     }
 }

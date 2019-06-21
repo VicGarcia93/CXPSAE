@@ -19,11 +19,14 @@ namespace CXPSAE
         // Expone el contexto de sincronización en la clase entera 
         private readonly SynchronizationContext SyncContext;
         private DataTable listProveedores;
+        private List<Compras> listCompras;
         // Crear los 2 contenedores de callbacks
         public event EventHandler Callback1;
+        public event EventHandler Callback2;
         // public event EventHandler Callback2;
         private const string PLACEHOLDER = "Búsqueda rápida";
         String[] parametros;
+        String[] cvesProveedores;
         public Form1(IProveedoresController controller)
         {
             this.controller = controller;
@@ -45,7 +48,15 @@ namespace CXPSAE
         {
             this.controller = controller;
         }
+        public void SetListaCompras(List<Compras> compras)
+        {
+            this.listCompras = compras;
+        }
 
+        public void SetComprasController(IComprasController controllerCompras)
+        {
+            this.controllerCompras = controllerCompras;
+        }
 
         //*******************EVENTOS*****************************************************************
 
@@ -69,6 +80,7 @@ namespace CXPSAE
             txtBuscar.ForeColor = Color.LightGray;
             // Puedes crear multiples callbacks o solo uno
             Callback1 += CallbackChangeDataGridView;
+            Callback2 += CallbackChangeDataGridViewCompras;
             Start(0);
         }
         private void CallbackChangeDataGridView(object sender, EventArgs e)
@@ -79,6 +91,12 @@ namespace CXPSAE
             dgvProveedores.AutoGenerateColumns = false;
             dgvProveedores.DataSource = listProveedores;
 
+        }
+        private void CallbackChangeDataGridViewCompras(object sender, EventArgs e)
+        {
+            dgvCompras.DataSource = null;
+            dgvCompras.AutoGenerateColumns = true;
+            dgvCompras.DataSource = listCompras;
         }
 
         private void ObtieneFoco(object sender, EventArgs e)
@@ -165,12 +183,12 @@ namespace CXPSAE
             while (!HeavyProcessStopped)
             {
 
-                controllerCompras.GetCompras(this);
+                controllerCompras.GetCompras(this, cvesProveedores[0],cvesProveedores[1],cvesProveedores[2]);
                 
                 // Ejecuta el primer callback desde el proceso de fondo al hilo principal (el de la interfaz gráfica)
                 // El primer callback activa el primer boton !
 
-                SyncContext.Post(e => TriggerCallback1(), null);
+                SyncContext.Post(e => TriggerCallback2(), null);
                 // Esperar otro segundo para más tareas pesadas.
                 Thread.Sleep(1000);
                 // La tarea heavy task finaliza, así que hay que detenerla.
@@ -190,10 +208,10 @@ namespace CXPSAE
             // Si el primer callback existe, ejecutarlo con la información dada
             Callback1?.Invoke(this, EventArgs.Empty);
         }
-
-        public void SetComprasController(IComprasController controllerCompras)
+        private void TriggerCallback2()
         {
-            this.controllerCompras = controllerCompras;
+            // Si el primer callback existe, ejecutarlo con la información dada
+            Callback2?.Invoke(this, EventArgs.Empty);
         }
 
         public void DoConsultaCompras()
@@ -201,9 +219,15 @@ namespace CXPSAE
             Start(2);
         }
 
-        public void SetListaCompras(List<Compras> compras)
+        private void dgvProveedores_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            throw new NotImplementedException();
+            cvesProveedores = new string[3];
+            cvesProveedores[0] = listProveedores.Rows[e.RowIndex][0].ToString();
+            cvesProveedores[1] = listProveedores.Rows[e.RowIndex][1].ToString();
+            cvesProveedores[2] = listProveedores.Rows[e.RowIndex][2].ToString();
+
+            //Console.WriteLine("Clave 1 proveedor: " + cvesProveedores[0]);
+            DoConsultaCompras();
         }
     }
 }
