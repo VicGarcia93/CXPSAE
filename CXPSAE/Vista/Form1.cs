@@ -69,6 +69,7 @@ namespace CXPSAE
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             doConsultaProveedores();
+            dgvCompras.DataSource = null;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -95,7 +96,7 @@ namespace CXPSAE
         private void CallbackChangeDataGridViewCompras(object sender, EventArgs e)
         {
             dgvCompras.DataSource = null;
-            dgvCompras.AutoGenerateColumns = true;
+            dgvCompras.AutoGenerateColumns = false;
             dgvCompras.DataSource = listCompras;
         }
 
@@ -219,7 +220,8 @@ namespace CXPSAE
             Start(2);
         }
 
-        private void dgvProveedores_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        
+        private void dgvProveedores_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             cvesProveedores = new string[3];
             cvesProveedores[0] = listProveedores.Rows[e.RowIndex][0].ToString();
@@ -228,6 +230,24 @@ namespace CXPSAE
 
             //Console.WriteLine("Clave 1 proveedor: " + cvesProveedores[0]);
             DoConsultaCompras();
+        }
+
+        private void dgvProveedores_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (this.dgvProveedores.Columns[e.ColumnIndex].Index == 2)
+            {
+                if (e.Value != null)
+                {
+
+                    float saldo = float.Parse(e.Value.ToString());
+                    if(saldo > -0.09 && saldo < 0.09)
+                    {
+                        saldo = 0;
+                    }
+                    e.Value = saldo.ToString("###,#00.00");
+
+                }
+            }
         }
     }
 }

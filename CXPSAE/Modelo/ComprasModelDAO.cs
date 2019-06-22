@@ -56,6 +56,7 @@ namespace CXPSAE.Modelo
 
         public List<Compras> GetCompraPorProveedor(String cve_1, String cve_2, String cve_3)
         {
+            ReiniciaValores();
             listaCompras = new List<Compras>();
             
             
@@ -113,15 +114,22 @@ namespace CXPSAE.Modelo
                 dataAux = new DataTable();
                 fbDataAdapterAux.Fill(dataAux);
                 
-                    saldoCompra = dataAux.Rows[0][0].ToString() ?? "";
+                saldoCompra = dataAux.Rows[0][0].ToString() ?? "0";
+                if (String.IsNullOrEmpty(saldoCompra))
+                    saldoCompra = "0";
+                Console.WriteLine("Saldo compra: {0}",saldoCompra);
+                
+                saldoCompra = (float.Parse(movAux[4].ToString()) - float.Parse(saldoCompra)).ToString();
+                var fSaldoCompra = float.Parse(saldoCompra);
+                if(fSaldoCompra < -0.9 || fSaldoCompra > 0.9)
+                {
+                    movimiento = new Compras(movAux[0].ToString(), movAux[1].ToString(), movAux[2].ToString(),
+                        movAux[3].ToString(), float.Parse(movAux[4].ToString()), float.Parse(saldoCompra), empresa);
 
-                    if (!saldoCompra.Equals("0") && !saldoCompra.Equals(""))
-                    {
-                        movimiento = new Compras(movAux[0].ToString(), movAux[1].ToString(), movAux[2].ToString(),
-                                movAux[3].ToString(), float.Parse(movAux[4].ToString()), float.Parse(saldoCompra), empresa);
-
-                        listaCompras.Add(movimiento);
-                    }
+                    listaCompras.Add(movimiento);
+                }
+                                        
+                
                                
             }
            
