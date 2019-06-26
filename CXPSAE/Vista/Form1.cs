@@ -98,6 +98,8 @@ namespace CXPSAE
             dgvCompras.DataSource = null;
             dgvCompras.AutoGenerateColumns = false;
             dgvCompras.DataSource = listCompras;
+
+            dgvProveedores.Enabled = true;
         }
 
         private void ObtieneFoco(object sender, EventArgs e)
@@ -223,12 +225,23 @@ namespace CXPSAE
         
         private void dgvProveedores_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            cvesProveedores = new string[3];
-            cvesProveedores[0] = listProveedores.Rows[e.RowIndex][0].ToString();
-            cvesProveedores[1] = listProveedores.Rows[e.RowIndex][1].ToString();
-            cvesProveedores[2] = listProveedores.Rows[e.RowIndex][2].ToString();
+            try
+            {
+                cvesProveedores = new string[3];
+              
+                cvesProveedores[0] = listProveedores.Select("Nombre = '" + dgvProveedores.Rows[e.RowIndex].Cells[0].Value.ToString() + "'")[0][0].ToString();
+                cvesProveedores[1] = listProveedores.Select("Nombre = '" + dgvProveedores.Rows[e.RowIndex].Cells[0].Value.ToString() + "'")[0][1].ToString();
+                cvesProveedores[2] = listProveedores.Select("Nombre = '" + dgvProveedores.Rows[e.RowIndex].Cells[0].Value.ToString() + "'")[0][2].ToString();
+
+                }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
 
             //Console.WriteLine("Clave 1 proveedor: " + cvesProveedores[0]);
+            dgvProveedores.Enabled = false;
             DoConsultaCompras();
         }
 
@@ -248,6 +261,11 @@ namespace CXPSAE
 
                 }
             }
+        }
+
+        private void dgvProveedores_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
