@@ -233,7 +233,9 @@ namespace CXPSAE
                 cvesProveedores[1] = listProveedores.Select("Nombre = '" + dgvProveedores.Rows[e.RowIndex].Cells[0].Value.ToString() + "'")[0][1].ToString();
                 cvesProveedores[2] = listProveedores.Select("Nombre = '" + dgvProveedores.Rows[e.RowIndex].Cells[0].Value.ToString() + "'")[0][2].ToString();
 
-                }
+                Console.WriteLine("Cve_1: {0}, Cve_2: {1}, Cve_3: {2}", cvesProveedores[0], cvesProveedores[1], cvesProveedores[2]);
+                Console.WriteLine("Cve_1: {0}, Cve_2: {1}, Cve_3: {2}", listProveedores.Rows[2][0], listProveedores.Rows[2][1], listProveedores.Rows[2][2]);
+            }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);

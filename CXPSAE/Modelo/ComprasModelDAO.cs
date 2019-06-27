@@ -75,10 +75,13 @@ namespace CXPSAE.Modelo
             comprasAdapter3.Fill(data3);
 
             GetComprasMovimientos(data1, "Matriz");
+            Console.WriteLine("Número de compras Matriz: {0}", listaCompras.Count);
             GetComprasMovimientos(data2, "Ejidal");
+            Console.WriteLine("Número de compras Ejidal: {0}", listaCompras.Count);
             GetComprasMovimientos(data3, "Poza Rica");
+            Console.WriteLine("Número de compras PZ: {0}", listaCompras.Count);
             //movimiento = new Compras("factura","concepto","documento","fechaApli",500,500,"empresa");
-            Console.WriteLine("Número de compras: {0}", listaCompras.Count);
+            Console.WriteLine("Número de compras totales: {0}", listaCompras.Count);
             return listaCompras;
             
         }
