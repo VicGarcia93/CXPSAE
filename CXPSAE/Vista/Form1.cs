@@ -69,7 +69,7 @@ namespace CXPSAE
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             doConsultaProveedores();
-            dgvCompras.DataSource = null;
+            
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -82,6 +82,10 @@ namespace CXPSAE
             // Puedes crear multiples callbacks o solo uno
             Callback1 += CallbackChangeDataGridView;
             Callback2 += CallbackChangeDataGridViewCompras;
+            AlinearEncabezados();
+            cmbEmpresa.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbEstatus.DropDownStyle = ComboBoxStyle.DropDownList;
+
             Start(0);
         }
         private void CallbackChangeDataGridView(object sender, EventArgs e)
@@ -123,6 +127,7 @@ namespace CXPSAE
         //**********************************MÉTODOS********************************************************
         public void doConsultaProveedores()
         {
+            dgvCompras.DataSource = null;
             if (txtBuscar.ForeColor == Color.LightGray)
                 txtBuscar.Text = "";
              parametros = new string[] { txtBuscar.Text, cmbEmpresa.SelectedIndex.ToString(),
@@ -222,6 +227,12 @@ namespace CXPSAE
             Start(2);
         }
 
+        private void AlinearEncabezados()
+        {
+            dgvProveedores.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvCompras.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        }
+
         
         private void dgvProveedores_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -234,7 +245,7 @@ namespace CXPSAE
                 cvesProveedores[2] = listProveedores.Select("Nombre = '" + dgvProveedores.Rows[e.RowIndex].Cells[0].Value.ToString() + "'")[0][2].ToString();
 
                 Console.WriteLine("Cve_1: {0}, Cve_2: {1}, Cve_3: {2}", cvesProveedores[0], cvesProveedores[1], cvesProveedores[2]);
-                Console.WriteLine("Cve_1: {0}, Cve_2: {1}, Cve_3: {2}", listProveedores.Rows[2][0], listProveedores.Rows[2][1], listProveedores.Rows[2][2]);
+                //Console.WriteLine("Cve_1: {0}, Cve_2: {1}, Cve_3: {2}", listProveedores.Rows[2][0], listProveedores.Rows[2][1], listProveedores.Rows[2][2]);
             }
             catch(Exception ex)
             {
@@ -268,6 +279,25 @@ namespace CXPSAE
         private void dgvProveedores_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void cmbEmpresa_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void cmbEmpresa_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            txtBuscar.Text = "";
+            doConsultaProveedores();
+            
+        }
+
+        private void cmbEstatus_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            txtBuscar.Text = "";
+            doConsultaProveedores();
+            
         }
     }
 }

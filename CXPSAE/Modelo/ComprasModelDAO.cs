@@ -127,7 +127,7 @@ namespace CXPSAE.Modelo
                 if(fSaldoCompra < -0.9 || fSaldoCompra > 0.9)
                 {
                     movimiento = new Compras(movAux[0].ToString(), movAux[1].ToString(), movAux[2].ToString(),
-                        movAux[3].ToString(), float.Parse(movAux[4].ToString()), float.Parse(saldoCompra), empresa);
+                        movAux[3].ToString().Substring(0,10), float.Parse(movAux[4].ToString()), float.Parse(saldoCompra), empresa);
 
                     listaCompras.Add(movimiento);
                 }

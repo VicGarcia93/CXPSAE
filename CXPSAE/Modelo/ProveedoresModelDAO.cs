@@ -105,8 +105,7 @@ namespace CXPSAE.Modelo
                     adapter3.Fill(data3);
 
                     return GetData();
-                    
-
+            
                     
             }
             return dataResult;
@@ -135,7 +134,7 @@ namespace CXPSAE.Modelo
             sqlProveedor.Append(" pro WHERE (pro.clave like '%");
             sqlProveedor.Append(clave + "%'");
             sqlProveedor.Append(" OR pro.nombre like '%");
-            sqlProveedor.Append(clave + "%')");
+            sqlProveedor.Append(clave.ToUpper() + "%')");
             if (!status.Equals("T"))
             {
                 sqlProveedor.Append(" AND status = '");
@@ -187,7 +186,6 @@ namespace CXPSAE.Modelo
                     }
                     else
                     {
-
                         // proveedor = new Proveedor(data2.Rows[i][0].ToString(), status, float.Parse(data2.Rows[i][1].ToString()), "E");
                         // proveedores.Add(proveedor);
                     }
@@ -206,7 +204,7 @@ namespace CXPSAE.Modelo
                 {
                     if ((dRProveedor = dataResult.Select("Nombre ='" + data3.Rows[i][1].ToString() + "'")[0]) != null)
                     {
-                        dRProveedor[1] = data3.Rows[i][0].ToString();
+                        dRProveedor[2] = data3.Rows[i][0].ToString();
                         //proveedor.SetSaldo(proveedor.GetSaldo() + float.Parse(data3.Rows[0][1].ToString()));
                         dRProveedor[5] = float.Parse(dRProveedor[5].ToString()) + float.Parse(data3.Rows[i][3].ToString());
                         //proveedor.SetEmpresa(proveedor.GetEmpresa() + " / PR");
